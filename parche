@@ -1,0 +1,30 @@
+import streamlit as st
+
+def login_ui():
+    if "usuario" not in st.session_state:
+        st.session_state.usuario = None
+
+    # Sesión activa
+    if st.session_state.usuario:
+        st.sidebar.success(f"✅ Sesión iniciada: {st.session_state.usuario}")
+
+        if st.sidebar.button("Cerrar sesión"):
+            st.session_state.usuario = None
+            st.rerun()
+
+        return st.session_state.usuario
+
+    # Login
+    st.sidebar.title("🔐 Acceso")
+
+    user = st.sidebar.text_input("Usuario")
+    pwd = st.sidebar.text_input("Contraseña", type="password")
+
+    if st.sidebar.button("Ingresar"):
+        if user == "admin" and pwd == "admin123":
+            st.session_state.usuario = user
+            st.rerun()
+        else:
+            st.error("Credenciales incorrectas")
+
+    return None
